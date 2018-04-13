@@ -1,10 +1,21 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
+import * as BooksAPI from '../BooksAPI'
 import '../App.css'
 
 class SearchBooks extends Component {
     state = {
-
+        typed: '',
+        bookList: []
+    }
+    changeValue(event) {
+        this.setState({typed: event.target.value});
+        console.log('VAL IS: ', event.target.value);
+        if(event.target.value.length > 2) {
+            BooksAPI.search(this.state.typed).then(res => {
+                this.setState({bookList: res});
+            });
+        }
     }
     render() {
         return (
@@ -15,19 +26,18 @@ class SearchBooks extends Component {
                         className="close-search"
                     ></Link>
                     <div className="search-books-input-wrapper">
-                        {/*
-                        NOTES: The search from BooksAPI is limited to a particular set of search terms.
-                        You can find these search terms here:
-                        https://github.com/udacity/reactnd-project-myreads-starter/blob/master/SEARCH_TERMS.md
-
-                        However, remember that the BooksAPI.search method DOES search by title or author. So, don't worry if
-                        you don't find a specific author or title. Every search is limited by search terms.
-                        */}
-                        <input type="text" placeholder="Search by title or author"/>
+                        <input type="text" placeholder="Search by title or author" onChange={this.changeValue.bind(this)}/>
                     </div>
                 </div>
                 <div className="search-books-results">
-                    <ol className="books-grid"></ol>
+                    <ol className="books-grid">
+                        {this.state.bookList.map((book) =>
+                            <li key={book.id}>
+                                <img src={book.imageLinks.smallThumbnail}/>
+                                <p>{book.title}</p>
+                            </li>
+                        )}
+                    </ol>
                 </div>
           </div>
         )

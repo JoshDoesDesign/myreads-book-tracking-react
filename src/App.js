@@ -19,14 +19,14 @@ class BooksApp extends React.Component {
 
   componentDidMount() {
     BooksAPI.getAll().then(res => {
-        console.log('RES IS: ', res);
+        // console.log('RES IS: ', res);
     });
   }
 
   render() {
     return (
       <div className="app">
-          <Route exact path="/" component={ListBooks}/>
+          <Route exact  path="/" component={ListBooks}/>
           <Route path="/search" component={SearchBooks}/>
       </div>
     )
