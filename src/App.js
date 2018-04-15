@@ -17,6 +17,10 @@ class BooksApp extends React.Component {
     showSearchPage: false
   }
 
+  onGreet() {
+    alert("Hello!");
+  }
+
   componentDidMount() {
     BooksAPI.getAll().then(res => {
         // console.log('RES IS: ', res);
@@ -26,8 +30,16 @@ class BooksApp extends React.Component {
   render() {
     return (
       <div className="app">
-          <Route exact  path="/" component={ListBooks}/>
+          {/* <Route exact path="/" component={ListBooks}/> */}
           <Route path="/search" component={SearchBooks}/>
+          <Route 
+            exact path="/" 
+            render={() => <ListBooks greet={this.onGreet} /> }
+          />
+          {/* <Route 
+            path="/search" 
+            render={() => <SearchBooks {...props} /> }
+          /> */}
       </div>
     )
   }

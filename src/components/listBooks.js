@@ -13,6 +13,7 @@ class ListBooks extends Component {
                     <h1>MyReads</h1>
                 </div>
                 <div className="list-books-content">
+                  <button onClick={this.props.greet}>Greet</button>
                 <div>
                     <div className="bookshelf">
                     <h2 className="bookshelf-title">Currently Reading</h2>
