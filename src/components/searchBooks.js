@@ -4,9 +4,19 @@ import * as BooksAPI from '../BooksAPI'
 import '../App.css'
 
 class SearchBooks extends Component {
-    state = {
-        typed: '',
-        bookList: []
+    constructor() {
+        super();
+        this.state = {
+            typed: '',
+            bookList: [],
+            value: ''
+        };
+    }
+    componentDidUpdate() {
+        console.log("this.state.bookList componentDidUpdate: ", this.state.bookList);
+    }
+    onChangeLink() {
+        this.props.changeLink(this.state.homeLink);
     }
     changeValue(event) {
         this.setState({typed: event.target.value});
@@ -16,6 +26,11 @@ class SearchBooks extends Component {
                 this.setState({bookList: res});
             });
         }
+    }
+    updateBookStatus(event) {
+        this.setState({
+            value: this.state.value
+        });
     }
     render() {
         return (
@@ -36,7 +51,7 @@ class SearchBooks extends Component {
                                 <img src={book.imageLinks.smallThumbnail}/>
                                 <p>{book.title}</p>
                                 <div className="book-shelf-changer">
-                                    <select>
+                                    <select value={this.state.value} onChange={this.updateBookStatus(event)}>
                                         <option value="none" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>

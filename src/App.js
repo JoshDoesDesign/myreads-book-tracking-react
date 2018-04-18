@@ -7,39 +7,67 @@ import SearchBooks from './components/searchBooks'
 import './App.css'
 
 class BooksApp extends React.Component {
-  state = {
-    /**
-     * TODO: Instead of using this state variable to keep track of which page
-     * we're on, use the URL in the browser's address bar. This will ensure that
-     * users can use the browser's back and forward buttons to navigate between
-     * pages, as well as provide a good URL they can bookmark and share.
-     */
-    showSearchPage: false
+  // state = {
+  //   /**
+  //    * TODO: Instead of using this state variable to keep track of which page
+  //    * we're on, use the URL in the browser's address bar. This will ensure that
+  //    * users can use the browser's back and forward buttons to navigate between
+  //    * pages, as well as provide a good URL they can bookmark and share.
+  //    */
+  //   showSearchPage: false
+  // }
+
+  constructor() {
+    super();
+    this.state = {
+      homeLink: "Home",
+      bookList: []
+    };
   }
 
-  onGreet() {
-    alert("Hello!");
+  getBookList(newBookList) {
+    // alert("Hello!");
+    console.log("this.state.bookList BEFORE: ", this.state.bookList);
+    this.setState({
+      bookList: newBookList
+    });
+    console.log("this.state.bookList AFTER: ", this.state.bookList);
+  }
+
+  onChangeLinkName(newName) {
+    this.setState({
+      homeLink: newName
+    });
   }
 
   componentDidMount() {
     BooksAPI.getAll().then(res => {
-        // console.log('RES IS: ', res);
+        console.log('RES IS: ', res);
     });
+  }
+
+  componentDidUpdate() {
+    console.log("this.state.bookList componentDidUpdate: ", this.state.bookList);
   }
 
   render() {
     return (
       <div className="app">
           {/* <Route exact path="/" component={ListBooks}/> */}
+          <p>{this.state.homeLink}</p>
           <Route path="/search" component={SearchBooks}/>
           <Route 
             exact path="/" 
-            render={() => <ListBooks greet={this.onGreet} /> }
+            render={() => <ListBooks 
+              sendBookList={this.getBookList.bind(this)} 
+              changeLink={this.onChangeLinkName.bind(this)}
+              // homeLink={this.state.homeLink}
+            /> }
           />
-          {/* <Route 
+          <Route 
             path="/search" 
-            render={() => <SearchBooks {...props} /> }
-          /> */}
+            render={() => <SearchBooks changeLink={this.onChangeLinkName.bind(this)} /> }
+          />
       </div>
     )
   }

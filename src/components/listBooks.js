@@ -3,17 +3,31 @@ import { Link } from 'react-router-dom'
 import '../App.css'
 
 class ListBooks extends Component {
-    state = {
-
+    constructor() {
+      super();
+      this.state = {
+        homeLink: "Changed Link",
+        passedState: [
+          {book: 'book1'},
+          {book: 'book2'}
+        ]
+      };
     }
+
+    onChangeLink() {
+      this.props.changeLink(this.state.homeLink);
+    }
+
     render() {
         return (
             <div className="list-books">
                 <div className="list-books-title">
                     <h1>MyReads</h1>
                 </div>
+                <p>{this.props.homeLink}</p>
                 <div className="list-books-content">
-                  <button onClick={this.props.greet}>Greet</button>
+                  {/* <button onClick={this.props.sendBookList(this.state.bookList)}>Send Book List</button> */}
+                  <button onClick={this.onChangeLink.bind(this)}>Change Header Link</button>
                 <div>
                     <div className="bookshelf">
                     <h2 className="bookshelf-title">Currently Reading</h2>
