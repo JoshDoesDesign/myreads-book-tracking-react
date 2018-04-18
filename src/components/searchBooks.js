@@ -51,7 +51,7 @@ class SearchBooks extends Component {
                                 <img src={book.imageLinks.smallThumbnail}/>
                                 <p>{book.title}</p>
                                 <div className="book-shelf-changer">
-                                    <select value={this.state.value} onChange={this.updateBookStatus(event)}>
+                                    <select value={this.state.value} onChange={this.updateBookStatus}>
                                         <option value="none" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>
