@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import * as BooksAPI from '../BooksAPI'
 import { Link } from 'react-router-dom'
+import BookShelf from './bookShelf'
 import '../App.css'
 
 class ListBooks extends Component {
@@ -42,50 +43,10 @@ class ListBooks extends Component {
               <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-              {this.state.bookList.map((book) => {
-                console.log('book.shelf: ', book.shelf);
-                if(book.shelf === 'currentlyReading') { 
-                  <div className="bookshelf">
-                    <h2 className="bookshelf-title">Currently Reading</h2>
-                    <div className="bookshelf-books">
-                      <ol className="books-grid">
-                        <li key={book.id}>
-                          <img src={book.imageLinks.smallThumbnail} alt={book.title}/>
-                          <p>{book.title}</p>
-                        </li>
-                      </ol>
-                    </div>
-                  </div>
-                }
-                if(book.shelf === 'wantToRead') { 
-                  <div className="bookshelf">
-                    <h2 className="bookshelf-title">Want To Read</h2>
-                    <div className="bookshelf-books">
-                      <ol className="books-grid">
-                        <li key={book.id}>
-                          <img src={book.imageLinks.smallThumbnail} alt={book.title}/>
-                          <p>{book.title}</p>
-                        </li>
-                      </ol>
-                    </div>
-                  </div>
-                }
-                if(book.shelf === 'read') { 
-                  <div className="bookshelf">
-                    <h2 className="bookshelf-title">Read</h2>
-                    <div className="bookshelf-books">
-                      <ol className="books-grid">
-                        <li key={book.id}>
-                          <img src={book.imageLinks.smallThumbnail} alt={book.title}/>
-                          <p>{book.title}</p>
-                        </li>
-                      </ol>
-                    </div>
-                  </div>
-                }
-              }
-            )}
-          </div>          
+            <BookShelf books={this.state.bookList} title="Currently Reading"/>
+            <BookShelf books={this.state.bookList} title="Want To Read"/>
+            <BookShelf books={this.state.bookList} title="Read"/>
+          </div>
           <div className="open-search">
             <Link
               to='/search'
