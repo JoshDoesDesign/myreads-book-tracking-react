@@ -18,26 +18,12 @@ class SearchBooks extends Component {
     }
 
     changeValue(event) {
-        // this.setState({typed: event.target.value});
-        // console.log('VAL IS: ', event.target.value);
         if(event.target.value.length > 2) {
             BooksAPI.search(event.target.value).then(res => {
                 this.setState({bookList: res});
-                // console.log('this.state.bookList: ', this.state.bookList);
             });
         }
     }
-    
-    // updateBookStatus(event) {
-    //     console.log('EVENT: ', event);
-    //     console.log('THIS: ', this);
-    //     // BooksAPI.update(book, shelf).then(res => {
-
-    //     // });
-    //     // this.setState({
-    //     //     value: event.target.value
-    //     // });
-    // }
 
     updateBookStatus(book, event) {
         console.log('book: ', book);

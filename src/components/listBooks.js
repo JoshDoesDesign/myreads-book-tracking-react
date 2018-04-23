@@ -5,36 +5,26 @@ import BookShelf from './bookShelf'
 import '../App.css'
 
 class ListBooks extends Component {
-    constructor() {
-      super();
-      this.state = {
-        homeLink: "Changed Link",
-        bookList: []
-      };
-    }
+  constructor() {
+    super();
+    this.state = {
+      homeLink: "Changed Link",
+      bookList: []
+    };
+  }
 
-    componentDidMount() {
-      console.log("componentDidMount listBooks.js was called");
-      BooksAPI.getAll().then(res => {
-        console.log('RES listBooks IS: ', res);
-        this.setState({
-          bookList: res
-        })
-      });
-    }
+  componentDidMount() {
+    BooksAPI.getAll().then(res => {
+      this.setState({
+        bookList: res
+      })
+      console.log('this.state.bookList: ', this.state.bookList);
+    });
+  }
 
-    componentDidUpdate() {
-      console.log("componentDidUpdate listBooks.js was called");
-    }
-
-    onChangeLink() {
-      this.props.changeLink(this.state.homeLink);
-    }
-
-    componentWillReceiveProps() {
-      console.log('componentWillReceiveProps was called');
-      console.log('this.props.bookList: ', this.props.bookList);
-    }
+  onChangeLink() {
+    this.props.changeLink(this.state.homeLink);
+  }
 
   render() {
     return (
@@ -43,9 +33,9 @@ class ListBooks extends Component {
               <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-            <BookShelf books={this.state.bookList} title="Currently Reading"/>
-            <BookShelf books={this.state.bookList} title="Want To Read"/>
-            <BookShelf books={this.state.bookList} title="Read"/>
+            <BookShelf books={this.state.bookList.filter(book => book.shelf === 'currentlyReading')} title="Currently Reading"/>
+            <BookShelf books={this.state.bookList.filter(book => book.shelf === 'wantToRead')} title="Want To Read"/>
+            <BookShelf books={this.state.bookList.filter(book => book.shelf === 'read')} title="Read"/>
           </div>
           <div className="open-search">
             <Link
