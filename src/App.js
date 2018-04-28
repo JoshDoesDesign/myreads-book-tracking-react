@@ -14,12 +14,6 @@ class BooksApp extends React.Component {
     };
   }
 
-  getBookList(newBookList) {
-    this.setState({
-      bookList: newBookList
-    });
-  }
-
   render() {
     return (
       <div className="app">

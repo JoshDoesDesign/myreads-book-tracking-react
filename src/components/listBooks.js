@@ -18,7 +18,6 @@ class ListBooks extends Component {
       this.setState({
         bookList: res
       })
-      console.log('this.state.bookList: ', this.state.bookList);
     });
   }
 
