@@ -11,6 +11,8 @@ class ListBooks extends Component {
       homeLink: "Changed Link",
       bookList: []
     };
+
+    this.updateBookStatus = this.updateBookStatus.bind(this);
   }
 
   componentDidMount() {
@@ -20,6 +22,16 @@ class ListBooks extends Component {
       })
     });
   }
+
+  updateBookStatus(book, newShelf) {
+    BooksAPI.update(book, newShelf).then(res => {
+      BooksAPI.getAll().then(res => {
+        this.setState({
+            bookList: res
+        })
+      });
+    });
+	}
 
   onChangeLink() {
     this.props.changeLink(this.state.homeLink);
@@ -32,9 +44,9 @@ class ListBooks extends Component {
               <h1>MyReads</h1>
           </div>
           <div className="list-books-content">
-            <BookShelf books={this.state.bookList.filter(book => book.shelf === 'currentlyReading')} title="Currently Reading"/>
-            <BookShelf books={this.state.bookList.filter(book => book.shelf === 'wantToRead')} title="Want To Read"/>
-            <BookShelf books={this.state.bookList.filter(book => book.shelf === 'read')} title="Read"/>
+            <BookShelf updateBook={this.updateBookStatus} books={this.state.bookList.filter(book => book.shelf === 'currentlyReading')} title="Currently Reading"/>
+            <BookShelf updateBook={this.updateBookStatus} books={this.state.bookList.filter(book => book.shelf === 'wantToRead')} title="Want To Read"/>
+            <BookShelf newDumbMethod={this.props.dumbMethod} updateBook={this.updateBookStatus} books={this.state.bookList.filter(book => book.shelf === 'read')} title="Read"/>
           </div>
           <div className="open-search">
             <Link

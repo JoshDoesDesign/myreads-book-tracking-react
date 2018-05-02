@@ -26,16 +26,8 @@ class SearchBooks extends Component {
     }
 
     updateBookStatus(book, event) {
-        console.log('book: ', book);
-        console.log('event.target.value: ', event.target.value);
-        BooksAPI.getAll().then(res => {
-            console.log('RES 1 IS: ', res);
-        });
         BooksAPI.update(book, event.target.value).then(res => {
             console.log('BooksAPI RES: ', res);
-        });
-        BooksAPI.getAll().then(res => {
-            console.log('RES 2 IS: ', res);
         });
     }
     render() {

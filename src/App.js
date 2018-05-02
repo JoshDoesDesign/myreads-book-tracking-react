@@ -20,7 +20,7 @@ class BooksApp extends React.Component {
           <Route path="/search" component={SearchBooks}/>
           <Route 
             exact path="/" 
-            render={() => <ListBooks /> }
+            render={() => <ListBooks dumbMethod={this.dummyMethod}  /> }
           />
           <Route 
             path="/search" 
