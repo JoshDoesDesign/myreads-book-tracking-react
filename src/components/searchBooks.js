@@ -20,7 +20,24 @@ class SearchBooks extends Component {
     changeValue(event) {
         if(event.target.value.length > 2) {
             BooksAPI.search(event.target.value).then(res => {
-                this.setState({bookList: res});
+                let searchResult = res;
+                BooksAPI.getAll().then(res => {
+                    let getAllResult = res;
+                    for(let i = 0; i < searchResult.length; i++) {
+                        for(let j = 0; j < getAllResult.length; j++) {
+                            if(searchResult[i].id === getAllResult[j].id) {
+                                console.log(searchResult[i].id)
+                                searchResult.splice(i, 1, getAllResult[j]);
+                            }
+                        }
+                        if(!searchResult[i].shelf) {
+                            searchResult[i].shelf = 'none'
+                        }
+                    }
+                    this.setState({
+                        bookList: searchResult
+                    });
+                });
             });
         }
     }
@@ -46,11 +63,10 @@ class SearchBooks extends Component {
                     <ol className="books-grid">
                         {this.state.bookList.map((book) =>
                             <li key={book.id}>
-                                <img src={book.imageLinks.smallThumbnail} alt={book.title}/>
+                                <img src={book.imageLinks ? book.imageLinks.smallThumbnail : 'https://via.placeholder.com/104x150'} alt={book.title}/>
                                 <p>{book.title}</p>
                                 <div className="book-shelf-changer">
-                                    {/* <select value={event} onChange={this.updateBookStatus.bind(this)}> */}
-                                    <select value={book} onChange={(event) => this.updateBookStatus(book, event)}>
+                                    <select value={book.shelf} onChange={(event) => this.updateBookStatus(book, event)}>
                                         <option value="none" disabled>Move to...</option>
                                         <option value="currentlyReading">Currently Reading</option>
                                         <option value="wantToRead">Want to Read</option>

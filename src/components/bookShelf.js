@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import * as BooksAPI from '../BooksAPI'
 import '../App.css'
 
 class BookShelf extends Component {
@@ -9,7 +8,6 @@ class BookShelf extends Component {
             bookList: [],
             bookToUpdate: null
         }
-
         this.handleBookUpdate = this.handleBookUpdate.bind(this)
     }
     handleBookUpdate(book, newShelf) {
